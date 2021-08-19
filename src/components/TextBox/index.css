@@ -1,0 +1,15 @@
+.textBox{
+    width: 68%;
+    position: fixed;
+    top: 17vh;
+    right: 3%;
+    height: 77vh;
+    margin: auto;
+    overflow-y: auto;
+    transition: width 1s;
+    background-color: rgba(64,96,95,0.3);
+    border: 0ch;
+}
+.active2{
+    width: 89%;
+}

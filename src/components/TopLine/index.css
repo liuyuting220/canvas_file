@@ -1,0 +1,15 @@
+.topLine{
+    background-color: rgba(64,96,95,0.3);
+    height: 11vh;
+    width: 100%;
+    transition: width 1s;
+}
+
+.iconBox{
+    height: 11vh;
+    width: 5%;
+    line-height: 13vh;
+    margin-left: 3%;
+    overflow: hidden;
+    cursor: pointer;
+}
