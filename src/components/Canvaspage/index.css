@@ -12,5 +12,77 @@ img{
     position: fixed;
     width: 5vw;
     height: 5vh;
+    line-height: 4vh;
+    margin: 3vh 0 0 3vw;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 10px;
+    border: 1px solid #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    
+}
+.draw_pencile_box:hover{
+    background-color: pink;    
+}
+.pencile_wrap{
+    position: fixed;
+    margin-top: 2vh;
+    /* margin-left: 3vw; */
+    background-color: #fff;
+    border: 1px beige solid;
+    border-radius: 8px;
+    /* opacity: 1;  */
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+.pencile_wrap_time{
+    opacity: 0;
+    animation:moveup 1s; 
+    animation-fill-mode:forwards;
+    animation-delay:.5s;
+}
+.pencile_wrap_leave{
+    opacity: 1;
+    animation: movedown 1s;
+    animation-fill-mode:forwards;
+    animation-delay:1s;
+}
+
+@keyframes moveup{ 
+    from{ 
+        transform: translateY(2.5rem);
+    } 
+    to{
+        opacity: 1; 
+        transform: translateY(0);
+    } 
+}
+@keyframes movedown{
+    from{  
+        transform: translateY(0); 
+        opacity: 1;
+    } 
+    to{
+        transform: translateY(2.5rem);
+        opacity: 0;
+    } 
+}
+.pencile_ul{
+    list-style: none;
+}
+.pencile_li{
+    float: left;
+    height: 10vh;
+    width: 8vw;
+    margin: 20px;
     background-color: pink;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 12vh;
+    padding-top: 3px;
+}
+.pencile_li:hover{
+    background-color: rgba(255,192,203,0.5) !important;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
