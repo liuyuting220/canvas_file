@@ -31,10 +31,12 @@ img{
     background-color: #fff;
     border: 1px beige solid;
     border-radius: 8px;
-    /* opacity: 1;  */
+    width: 75vw;
+    opacity: 1; 
     display: flex; 
     justify-content: center; 
     align-items: center;
+    /* overflow: hidden; */
 }
 .pencile_wrap_time{
     opacity: 0;
@@ -43,29 +45,16 @@ img{
     animation-delay:.5s;
 }
 .pencile_wrap_leave{
-    opacity: 1;
-    animation: movedown 1s;
-    animation-fill-mode:forwards;
-    animation-delay:1s;
+    opacity: 0; 
 }
 
 @keyframes moveup{ 
     from{ 
-        transform: translateY(2.5rem);
+        transform: translateY(0);
     } 
     to{
         opacity: 1; 
         transform: translateY(0);
-    } 
-}
-@keyframes movedown{
-    from{  
-        transform: translateY(0); 
-        opacity: 1;
-    } 
-    to{
-        transform: translateY(2.5rem);
-        opacity: 0;
     } 
 }
 .pencile_ul{
@@ -86,3 +75,50 @@ img{
     background-color: rgba(255,192,203,0.5) !important;
     box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
+.inputbox{
+    /* display: none; */
+    background-color: rgba(255,192,203,0.8);
+    border-radius: 5px;
+    width: 18vw;
+    height: 8vh;
+    position: fixed;
+    left: 46vw;
+    top: 15vh;
+}
+.inputbox span{
+    width: 100%;
+    text-align: center;
+    height: 1vh;
+    display: inline-block;
+    color: #3008e4 !important;
+    /* margin: auto; */
+}
+input[type="range"] {
+    -webkit-appearance: none;
+    background-color: #fff;
+    width: 150px;
+    height: 5px;
+    border-radius: 5px;
+    margin: 0 auto;
+    outline: 0;    position: absolute;
+    top: 5vh;
+    left: 2vh;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background-color: #a492f2;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid white;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+  }
+   input[type="range"]::-webkit-slider-thumb:hover {
+    background-color: white;
+    border: 2px solid #a492f2;
+  }
+  input[type="range"]::-webkit-slider-thumb:active {
+    transform: scale(1.3);
+  
+  }

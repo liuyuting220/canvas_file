@@ -1,36 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <style>
-      canvas {
-        border:1px solid #ccc;
-      }
-    </style>
-    <body>
-      <canvas id="canvas" width="450" height="360"></canvas>
-      <script>
-        var canvas = document.getElementById("canvas"),
-            r = 10,
-            ctx = canvas.getContext("2d"),
-            img = new Image();
-            
-        img.src = "http://images.17173.com/2010/newgame/2010/07/08/allan07081500_11s.jpg";
-        img.onload = function() {
-          ctx.drawImage(img, 0, 0);
-        }
-        
-        var moveToRight = function() {
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<input id="range" type="range" min="0" max="50000" value="5"step="10" oninput="change()" onchange="change()">
+		<span id="value">0</span>
+		<script type='text/javascript'>
+			function change() {
+  				var value = document.getElementById('range').value ;
+  				document.getElementById('value').innerHTML = value;
+			}
+		</script>
  
-          ctx.drawImage(img, 0, 0);
-          // ctx.globalCompositeOperation = "source-over";
-          // ctx.font = "30px 黑体";
-          // ctx.textAlign = "center";
-          // ctx.fillStyle = "#000000";
-          // ctx.fillText("textAlign=center", r, 200);
-          // r = r + 10;
-        }
-        setInterval(moveToRight, 200);
-      </script>
-    </body>
+	</body>
 </html>
