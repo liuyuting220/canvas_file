@@ -45,3 +45,6 @@ function readFileList(path, filesList) {
     arr = getFiles.getImageFiles("./myImage/");
     console.log(arr);
 module.exports = arr; 
+
+
+// 使用fs.watch进行更改 对图片文件夹进行监听
