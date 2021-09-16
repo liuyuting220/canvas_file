@@ -98,14 +98,14 @@ img{
     border: #a492f2 1.5px solid;
 }
 select{
-    width: 3.5vw;
+    width: 4vw;
     outline: none;
     border-radius: 3px;
     border: #a492f2 2px solid;
     margin-left: 0.5vw;
 }
 .inputbox{
-    /* display: none; */
+    display: none;
     background-color: rgba(255, 192, 203, 0.8);
     border-radius: 5px;
     width: 18vw;

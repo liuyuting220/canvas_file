@@ -22,6 +22,56 @@ const ColorPicker = (props) => {
     return <SketchPicker color={color} onChange={onChangeColor} /> 
 }
 
+// 鼠标对象
+class TextCursor {
+    constructor(width,fillStyle){
+        this.width = width || 2;
+        this.fillStyle = fillStyle || 'rgba(0,0,0,0.5)';
+        this.left = 0;
+        this.top = 0;
+    }
+    
+
+    getHeight(canvas){
+        // console.log("+++++++++++++++++++++++++++++++++++++",canvas.measureText('M').width);
+        // var h = canvas.measureText('M').width;
+        // let h = sizeRef.current.value;
+        // return 0.85*h;
+        return canvas.fontSize;
+        // return h+h/6;
+    }
+    //创建光标所在路径
+    creatPath(canvas){
+        canvas.beginPath();
+        canvas.rect(this.left,this.top,this.width,this.getHeight(canvas));
+    }
+    //绘制光标 left,bottom代表鼠标点下的一点在canvas中的坐标，即loc.x,loc.y
+    draw(canvas,left,bottom){
+        console.log(canvas,left,bottom,"-----------------------------------");
+        canvas.save();
+
+        this.left = left;
+        this.top = bottom - this.getHeight(canvas);
+        console.log(2,canvas.font);
+        console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&",this.left,this.top,this.getHeight(canvas));
+        this.creatPath(canvas);
+
+        canvas.fillStyle = this.fillStyle;
+        canvas.fill();
+
+        canvas.restore();
+    }
+    //擦除光标:擦除的是光标所在的那一块像素
+    erase(canvas,imageData){
+        console.log(canvas,imageData,"000");
+        console.log(this.left,this.top,this.width);
+        canvas.putImageData(imageData,0,0,this.left,this.top,this.width,this.getHeight(canvas));
+        // canvas.putImageData(imageData,0,0);
+    }
+}
+
+    
+
 
 // 文本类  每次点击创建的类
 class TextInput{
@@ -33,13 +83,16 @@ class TextInput{
     }
     // 得到字符高度函数
     getHeight (canvas) {
-        let height = canvas.measureText('M').width;
-        return height/6+height;
+        // let height = canvas.measureText('M').width;
+        console.log(canvas.fontSize,"====================================");
+        return canvas.fontSize;
     }
     // 得到字符宽度函数
     getWidth (canvas) {
-        let height = canvas.measureText(this.text).width;
-        return height/6+height;
+        // let height = canvas.measureText(this.text).width;
+        // return height/6+height;
+        console.log(this.text.clientWidth,"getgetgetget");
+        return canvas.fontSize;
     }
     // 插入字符串
     addstring (text) {
@@ -64,6 +117,7 @@ class TextInput{
         canvas.textAlign = 'start';
         canvas.textBaseline = 'bottom';
 
+        canvas.font = canvas.fontSize + "px " + "sans-serif";
         canvas.strokeText(this.text,this.left,this.bottom);
         canvas.fillText(this.text,this.left,this.bottom);
 
@@ -71,10 +125,10 @@ class TextInput{
     }
     //擦除文本：注意根据canvas规范要想擦除文本，必须替换掉整个Canvas
     erase (canvas,imageData) {
+        console.log(canvas,imageData,"111");
         canvas.putImageData(imageData,0,0);
     }
 }
-
 
 export default function Canvaspage() {
     const electron = window.electron;
@@ -88,15 +142,16 @@ export default function Canvaspage() {
     const imgRef = useRef(null)
     const inputRef = useRef(null);
     const inputTextRef = useRef(null);
+    const sizeRef = useRef(null)
     
     // let imgRef = '';       //图片保存字符串
     
-    let cursor = new TextInput();    // 光标对象
+    /* let cursor = new TextCursor();    // 光标对象
     let line = null;                  // 新文本对象
     let blinkingInterval = null;      // 光标闪烁定时器
 
     let blink_time = 1000;
-    let blink_off = 300;
+    let blink_off = 300; */
 
     useEffect(() => {
         // changeInputNum();
@@ -147,7 +202,142 @@ export default function Canvaspage() {
 
     // 文本框建立
     const buildTextBox = () => {
-        // console.log(colorInput);
+        const elem = canvasRef.current;
+        const canvas = elem.getContext('2d');
+
+        var cursor = new TextCursor()         // 光标对象
+        var line = null;                     // 文本对象
+        var cursorInterval = null;           // 闪烁定时器
+        var drawingSurfaceImageDate;         // 保存画布数据
+
+        const blink_time = 1000;             // 光标闪烁时间间隔
+        const blink_off = 300;     
+        
+        cursor.fillStyle = colorInput;
+        
+        canvas.fillStyle = colorInput
+        canvas.strokeStyle = colorInput;
+        canvas.lineWidth = 2;
+
+        // const top = 0;
+        // const left = 0;
+        console.log("                      ",sizeRef.current.value);
+        // 画布数据初始化
+        setFont(sizeRef.current.value);
+        saveDrawingSurface();
+
+         // canvas点击事件
+         elem.onmousedown = function(e){
+            var loc = windowToCanvas(e.clientX,e.clientY);
+            console.log(loc);
+            console.log("loc--------",loc.x,loc.y);
+            moveCursor(loc.x,loc.y);
+            // 每次点击时新建一个文本行对象
+            line = new TextInput(loc.x,loc.y); 
+            console.log(line,"222");
+        }
+
+        // 键盘输入事件
+        // onkeypress只有输入键可触发，晚于onkeydown触发
+        document.onkeypress = function(e){
+            // e有一个属性e.which指示哪个键被按下，给出该键的索引值（按键码）
+            // 静态函数String.fromCharCode()可以把索引值（按键码）转化成该键对应的的字符
+            var key = String.fromCharCode(e.which);
+                console.log(line,"333");
+                console.log('keypress');
+                canvas.save();
+                // 为擦除文本清空整个canvas,也保留了上次写的文本
+                line.erase(canvas,drawingSurfaceImageDate);
+                // 插入文本内容到当前文本行对象
+                line.addstring(key);
+                // 定义新的光标位位置于文本行最后
+                moveCursor(line.left+line.getWidth(canvas),line.bottom);
+
+                // 重绘出新的文本行
+                line.draw(canvas);
+                canvas.restore();
+
+        }
+
+        // 键盘删除事件
+
+        document.onkeydown = function(e){
+            // 因为调用e.preventDefault()会禁用后后的onkeypress事件，因为功能键backspace和enter,不需要执行keypress,所以要禁用掉
+            if(e.key === 'Backspace' || e.key === 'Page Down'){
+                console.log("deletedeletedeletedeletedelete");
+                e.preventDefault();
+            }
+
+            // 按下为Backspace键时执行删除文本最后位的字符操作
+            if(e.key === 'Backspace'){
+                canvas.save();
+                console.log('keydown')
+                // 清空本行文本行
+                line.erase(canvas,drawingSurfaceImageDate);
+                //删除上一个字符
+                line.removeCharacterBeforeCaret();
+                // 重新定位光标位置
+                moveCursor(line.left+line.getWidth(canvas),line.bottom);
+
+                // 重绘新的文本行
+                line.draw(canvas);
+
+                canvas.restore();
+            }
+        }
+
+        // sizeRef大小改变
+        // sizeRef.current.value.onChange = setFont(sizeRef.current.value)
+
+        // 产生光标
+        function moveCursor(x,y){
+            console.log("******************************************",x,y);
+            // 擦除上一次光标位置
+            cursor.erase(canvas,drawingSurfaceImageDate);
+            // 每次保存的是上一次之前 所有文本行的canvas画布的像素
+            saveDrawingSurface();
+            cursor.draw(canvas,x,y);
+            blinkCursor(x,y);
+        }
+        // 光标闪烁
+        function blinkCursor(x,y){
+            clearInterval(cursorInterval);
+            cursorInterval = setInterval(function(){
+                console.log(drawingSurfaceImageDate);
+                cursor.erase(canvas,drawingSurfaceImageDate);
+                setTimeout(function(){
+                    // 避免上次光标的此定时器启动没停掉，只执行当前光标的些事件
+                    if(cursor.left == x&&cursor.top+cursor.getHeight(canvas) == y){ 
+                        cursor.draw(canvas,x,y);
+                    }
+                },blink_off);
+            },blink_time);
+        }
+
+        // Failed to execute 'putImageData' on 'CanvasRenderingContext2D': Value is not of type 'long'.
+
+        
+        // 设置字体
+        function setFont(value){
+            canvas.fontSize=value;
+            canvas.font = value;
+            console.log(1,canvas.font);
+        }
+
+        // 保存画布数据
+        function saveDrawingSurface(){
+            drawingSurfaceImageDate = canvas.getImageData(0,0,elem.width,elem.height);
+            console.log("draw",drawingSurfaceImageDate);
+        }
+
+        // 转换坐标
+        function windowToCanvas(x,y){
+            var bbox = elem.getBoundingClientRect();
+            return {
+                x:x-bbox.left*(elem.width/bbox.width),
+                y:y-bbox.top*(elem.height/bbox.height)
+            };
+        };
     }
 
     // 改变画笔宽度数据
@@ -262,15 +452,15 @@ export default function Canvaspage() {
                     </ul>
                     <div className='textbox'>
                         <label>文本大小</label>
-                        <select>
-                            <option value="9">9</option>
+                        <select ref = { sizeRef }> 
                             <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                            <option value="14">14</option>
-                            <option value="16">16</option>
-                            <option value="18">18</option>
                             <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
+                            <option value="60">60</option>
+                            <option value="70">70</option>
+                            <option value="80">80</option>
                         </select>
                     </div>
                     <div className="inputbox">
