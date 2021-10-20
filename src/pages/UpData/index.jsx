@@ -20,29 +20,6 @@ export default function UpData() {
   let [upDataHint,setUpDataHint] = useState(false)
 
 
-
-  // 从localStorage中取数据 切换路由组件时，保存还未上传的本地文件地址
-  /* useEffect(()=>{
-    if(localStorage.getItem("upFileAddressArr") && localStorage.getItem("upFileArr")){
-      setFileAddress(()=>{
-        if(localStorage.getItem("upFileAddressArr").indexOf(",") !== -1){
-          fileAddress = localStorage.getItem("upFileAddressArr").split(",");
-        }
-        else{
-          fileAddress[0] = localStorage.getItem("upFileAddressArr");
-        }
-        return [...fileAddress]
-      });
-      setfileArrs(localStorage.getItem("upFileArr").split(","));
-    }
-    return ()=>{
-      // 处理切换组件后 保存地址数组
-      fileAddress = localStorage.getItem("upFileAddressArr").split(",");
-      localStorage.setItem("upFileAddressArr",fileAddress);
-      fileArrs = localStorage.getItem("upFileArr").split(",");
-      localStorage.setItem("upFileArr",fileArrs);
-    }
-  },[]) */
   
   
 
@@ -58,7 +35,6 @@ export default function UpData() {
       for (let i in item){
         fileItem[i]=item[i];
       }
-      // console.log(fileItem);
       fileItem = JSON.stringify(fileItem);
       //  对已经选择的文件进行更改
       if(index1 < len && index1 !== -1){
@@ -69,11 +45,6 @@ export default function UpData() {
           return [...temporaryAddress]
         })
         localStorage.setItem("upFileAddressArr",fileAddress);
-        /* setfileArrs(()=>{
-          fileArrs[index1] = fileItem;
-          localStorage.setItem("upFileArr",fileArrs);
-          return [...fileArrs];
-        }) */
         return [...fileAddress];
       }
 
@@ -86,11 +57,6 @@ export default function UpData() {
           return [...temporaryAddress]
         })
         localStorage.setItem("upFileAddressArr",fileAddress);
-        /* setfileArrs(()=>{
-          fileArrs.push(fileItem);
-          localStorage.setItem("upFileArr",fileArrs);
-          return [...fileArrs];
-        }) */
         return [...fileAddress];
       }
       else{
@@ -107,26 +73,10 @@ export default function UpData() {
 
   // 递交文件按钮  将本地文件上传到数据库中
   const upDataBtn = () => {
-    // console.log(temporaryAddress);
-    /* let temporaryAddress = localStorage.getItem("upFileArr").split("},");
-    for(let i = 0; i < temporaryAddress.length - 1; i++){
-      temporaryAddress[i] = temporaryAddress[i] + "}"
-    }
-    console.log(temporaryAddress);*/
     let data = new FormData() 
     let dataName = '';
     let dataAddress = ''
     for (let i in temporaryAddress){
-      /* temporaryAddress[i] = JSON.parse(temporaryAddress[i]);
-      data.append('imgName'+i,temporaryAddress[i].name)
-      // console.log(temporaryAddress[i].type+"------"+temporaryAddress[i].size);
-      let tem = new File([Blob],
-        temporaryAddress[i].name,
-        {
-          type:temporaryAddress[i].type
-        })
-      // tem.size = temporaryAddress[i].size
-      console.log(tem); */
       data.append('imgName'+i,temporaryAddress[i].name)
       data.append('img'+i,temporaryAddress[i])
       dataName = dataName + temporaryAddress[i].name + "+";

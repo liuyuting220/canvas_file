@@ -5,7 +5,6 @@ let createWebSocket = (data,filename) => {
 
   websocket.onopen = () => {
     heartCheck.reset().start();
-    console.log(data,filename);
     websocket.send(data+'?'+filename)
   }
   websocket.onerror = () => {
@@ -13,7 +12,6 @@ let createWebSocket = (data,filename) => {
   }
   websocket.onmessage = (e) => {
     lockReconnect = true;
-    console.log(e.data);
   }
   websocket.onclose = (e) => {
     console.log('websocket断开连接',e.code,e.reason,e.wasClean);

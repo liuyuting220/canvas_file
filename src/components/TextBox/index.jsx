@@ -12,14 +12,10 @@ export default function TextBox(props) {
 
   return (
     <div className={["textBox",mobile?"null":"active2"].join(' ')}>
-      {/* <Switch> */}
-        {/* <Route path='/canvas' component={CanvasPage}></Route> */}
-        <Route path='/uploading' component={UpData}></Route>
-        <Route path='/edit' component={EditFile}></Route>
-        <Route path='/finish' component={Finishing}></Route>
-        <Route path='/recycleBin' component={RecycleFile}></Route>
-        {/* <Redirect to="/uploading"/> */}
-      {/* </Switch> */}
+      <Route path='/uploading' component={UpData}></Route>
+      <Route path='/edit' component={EditFile}></Route>
+      <Route path='/finish' component={Finishing}></Route>
+      <Route path='/recycleBin' component={RecycleFile}></Route>
     </div>  
   )
 }

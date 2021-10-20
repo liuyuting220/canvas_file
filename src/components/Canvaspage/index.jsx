@@ -57,8 +57,6 @@ class TextCursor {
   }
   //擦除光标:擦除的是光标所在的那一块像素
   erase(canvas,imageData){
-    // console.log(canvas,imageData,"000");
-    // console.log(this.left,this.top,this.width);
     canvas.putImageData(imageData,0,0,this.left,this.top,this.width,this.getHeight(canvas));
   }
 }
@@ -113,14 +111,12 @@ class TextInput{
   }
   //擦除文本：注意根据canvas规范要想擦除文本，必须替换掉整个Canvas
   erase (canvas,imageData) {
-    console.log(canvas,imageData,"111");
     canvas.putImageData(imageData,0,0);
   }
 }
 
 export default function CanvasPage() {
   const electron = window.electron;
-  let canvasIcon = true;
   let colorInput = '#ffffff';     // 记录颜色拾取器的颜色
   let type = 'jpg';         // canvas保存图片类型
 
@@ -150,7 +146,6 @@ export default function CanvasPage() {
 
     imgRef.current.src = "file:///C:\\Users\\max\\Desktop\\canvas_file\\myImage\\"+arg;
     let img = new Image();
-    // console.log(arg);
     img.src = "file:///C:\\Users\\max\\Desktop\\canvas_file\\myImage\\"+arg;
     
 
@@ -166,13 +161,11 @@ export default function CanvasPage() {
 
   // 画笔点击
   const draw_pencil = () => {
-    // console.log("pencil");
     pencil_detail("pencil",pencilWidth,colorInput)
   };
 
   // 橡皮点击
   const eraser = () => {
-    // console.log("eraser");
     pencil_detail("eraser",pencilWidth)
   }
 
@@ -195,7 +188,6 @@ export default function CanvasPage() {
     canvas.strokeStyle = colorInput;
     canvas.lineWidth = 2;
 
-    console.log("            ",sizeRef.current.value);
     // 画布数据初始化
     setFont(sizeRef.current.value);
     saveDrawingSurface();
@@ -203,12 +195,9 @@ export default function CanvasPage() {
      // canvas点击事件
      elem.onmousedown = function(e){
       var loc = windowToCanvas(e.clientX,e.clientY);
-      console.log(loc);
-      console.log("loc--------",loc.x,loc.y);
       moveCursor(loc.x,loc.y);
       // 每次点击时新建一个文本行对象
       line = new TextInput(loc.x,loc.y); 
-      console.log(line,"222");
     }
 
     // 键盘输入事件
@@ -217,8 +206,6 @@ export default function CanvasPage() {
       // e有一个属性e.which指示哪个键被按下，给出该键的索引值（按键码）
       // 静态函数String.fromCharCode()可以把索引值（按键码）转化成该键对应的的字符
       var key = String.fromCharCode(e.which);
-        console.log(line,"333");
-        console.log('keypress');
         canvas.save();
         // 为擦除文本清空整个canvas,也保留了上次写的文本
         line.erase(canvas,drawingSurfaceImageDate);
@@ -244,7 +231,6 @@ export default function CanvasPage() {
       // 按下为Backspace键时执行删除文本最后位的字符操作
       if(e.key === 'Backspace'){
         canvas.save();
-        console.log('keydown')
         // 清空本行文本行
         line.erase(canvas,drawingSurfaceImageDate);
         //删除上一个字符
@@ -262,7 +248,6 @@ export default function CanvasPage() {
 
     // 产生光标
     function moveCursor(x,y){
-      // console.log("******************************************",x,y);
       // 擦除上一次光标位置
       cursor.erase(canvas,drawingSurfaceImageDate);
       // 每次保存的是上一次之前 所有文本行的canvas画布的像素
@@ -274,7 +259,6 @@ export default function CanvasPage() {
     function blinkCursor(x,y){
       clearInterval(cursorInterval);
       cursorInterval = setInterval(function(){
-        console.log(drawingSurfaceImageDate);
         cursor.erase(canvas,drawingSurfaceImageDate);
         setTimeout(function(){
           // 避免上次光标的此定时器启动没停掉，只执行当前光标的些事件
@@ -292,13 +276,11 @@ export default function CanvasPage() {
     function setFont(value){
       canvas.fontSize=value;
       canvas.font = value;
-      console.log(1,canvas.font);
     }
 
     // 保存画布数据
     function saveDrawingSurface(){
       drawingSurfaceImageDate = canvas.getImageData(0,0,elem.width,elem.height);
-      console.log("draw",drawingSurfaceImageDate);
     }
 
     // 转换坐标
@@ -319,7 +301,6 @@ export default function CanvasPage() {
   }
   // 颜色拾取器的颜色改变
   const changeColorBox = (color) => {
-    console.log('color',color);
     colorInput = color;
   }
 
@@ -335,16 +316,12 @@ export default function CanvasPage() {
         var ev = ev || window.event;
         let offX = ev.offsetX;
         let offY = ev.offsetY;
-        // canvas.moveTo(ev.clientX,ev.clientY)
         canvas.moveTo(offX,offY)
-        // canvas.moveTo(ev.clientX - elem.offsetLeft + elem.scrollLeft, ev.clientY - elem.offsetTop + elem.scrollTop); //ev.clientX-oC.offsetLeft,ev.clientY-oC.offsetTop鼠标在当前画布上X,Y坐标
         document.onmousemove = function(ev) {
           var ev = ev || window.event; //获取event对象
-          // canvas.lineTo(ev.clientX,ev.clientY)
           let offX = ev.offsetX;
           let offY = ev.offsetY;
           canvas.lineTo(offX,offY)
-          // canvas.lineTo(ev.clientX - elem.offsetLeft + elem.scrollLeft, ev.clientY - elem.offsetTop + elem.scrollTop);
           canvas.stroke();
         };
         elem.onmouseup = function() {
@@ -388,27 +365,14 @@ export default function CanvasPage() {
     const elem = canvasRef.current;
     const canvas = elem.getContext('2d');
     let imgData = elem.toDataURL(type);
-    // console.log(imgData);
     // 加工image data，替换mime type
     imgData = imgData.replace(_fixType(type),'image/octet-stream');
-    // console.log(imgData);
     // 下载后的问题名
     let name = imgRef.current.src;
-    // console.log(name.split("/")[name.split("/").length - 1],name.split("/"));
     let filename = name.split("/")[name.split("/").length - 1];
     // download
     console.log("开始创建WebSocket连接");
-    /* const ws = new Websocket('ws://localhost:8080');
-    ws.on('open',function open() {
-        const dataStr = imgData + '?' + filename;
-        console.log(dataStr);
-        ws.send(dataStr);
-    })
-    ws.on('message',function incoming(message) {
-        console.log('received: ',message);
-    }) */
     createWebSocket(imgData,filename);
-    // saveFile(imgData,filename);
     
   }
 
@@ -417,24 +381,6 @@ export default function CanvasPage() {
     type = type.toLowerCase().replace(/jpg/i, 'jpeg');
     let r = type.match(/png|jpeg|bmp|gif/)[0];
     return 'image/' + r;
-  };
-  
-  // 在本地进行文件保存
-  const saveFile = function(data, filename){
-    const a = document.createElement("a");
-    a.download = filename;
-    // a.href = instance.toDataURL(type||'png');
-    a.href = data;
-    console.log(a);
-    a.click();
-    /* var save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
-    save_link.href = data;
-    save_link.download = filename;
-     
-    // console.log(filename);
-    var event = document.createEvent('MouseEvents');
-    event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-    save_link.dispatchEvent(event); */
   };
      
   

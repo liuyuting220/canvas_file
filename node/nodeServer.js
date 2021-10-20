@@ -2,10 +2,8 @@ var http = require('http')
 var formidable = require('formidable')
 var fs = require('fs')
 var path = require('path')
-const express = require("express");
 const mysql = require("mysql");
 const urlLib = require("url");
-const cors = require("cors");
 const WebSocket = require('ws');
  
 var app = http.createServer(function(req, res){
@@ -79,14 +77,12 @@ var my = mysql.createConnection({
 })
 my.connect();
 
-// var app = express();
 var server = require('http').Server(app)
 let imgData = [];
 
 var wss = new WebSocket.Server({port: 8080});
 
 wss.on('connection',function connection(ws) {
-    // console.log('connection成功');
     let data;
     let dataBuffer;
     let targetPath;
@@ -108,27 +104,17 @@ wss.on('connection',function connection(ws) {
             }
             else{
               my.query(`UPDATE updataImg SET canvasImg='${targetPath}' WHERE upname='${imgData[1]}';`)
-              /* my.query("SELECT * FROM updataImg",(err,data) => {
-                console.log("数据库中数据如下");
-                for(let i in data){
-                  console.log(data[i]);
-                }
-              }) */
             }
           })
         }
     })
     ws.send('完成连接并返回字符串');
 })
-// let app = express();
 
-// app.use(cors());
 function linkSQL(req,res){
   let urlobj = urlLib.parse(req.url);
-  // console.log(urlobj);
   if(urlobj.pathname =='/updata'){
       const obj = urlLib.parse(req.url, true);
-      // console.log(obj.query);
       const name = obj.query.name.split("+") ? obj.query.name.split("+"):[];
       const address = obj.query.address.split("+") ? obj.query.address.split("+"):[];
       name.pop();
@@ -139,8 +125,6 @@ function linkSQL(req,res){
         } else {
           let len = name.length;
           for (let i in data) {
-            // console.log(data[i].upname == -1);
-            // console.log(name.indexOf(data[i].upname) != -1);
             if (name.indexOf(data[i].upname) != -1) {
               name.splice(name.indexOf(data[i].upname),1)
             }
@@ -151,7 +135,6 @@ function linkSQL(req,res){
             res.end("ok: false,msg: '图片部分已存在'")
           }else{
             for (let i in name) {
-              // console.log("11111");
               let str = name[i];
               let str1 = address[i];
               my.query(`INSERT INTO updataImg(upaddress,upname) VALUES('${str1}','${str}');`,
@@ -167,9 +150,6 @@ function linkSQL(req,res){
         }
       })
 
-      /* my.on('error', function (err) {
-        console.log("[mysql error]", err);
-      }); */
     }
 }
 

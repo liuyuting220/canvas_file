@@ -6,7 +6,6 @@ export default function EditFile() {
   // 获取url路径
   const hash = useLocation();
   const history = useHistory();
-  console.log(hash);
   const electron = window.electron;
   const [data, setData] = React.useState(['111.jpg'])
 
@@ -27,11 +26,7 @@ export default function EditFile() {
 
   const canvas_win = (item)=>{
     console.log("成功压栈");
-    // e.preventDefault()
-    console.log(item);
-    console.log(history.location);
     history.go('/canvas');
-    console.log(history.location);
     electron.ipcRenderer.send("canvas_window",item)
   }
   return (
