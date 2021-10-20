@@ -1,23 +1,23 @@
 li{
-    height: 10vh;
-    line-height: 10vh;
-    width: 100%;
-    text-align: center;
-    white-space:nowrap;
-    overflow: hidden;
-    cursor: pointer;
-    /* padding-left: 28%; */
+  height: 10vh;
+  line-height: 10vh;
+  width: 100%;
+  text-align: center;
+  white-space:nowrap;
+  overflow: hidden;
+  cursor: pointer;
+  /* padding-left: 28%; */
 }
 li:hover{
-    background-color: rgba(79, 129, 128, 0.678);
+  background-color: rgba(79, 129, 128, 0.678);
 }
 .bc79{
-    background-color: rgba(79, 129, 128, 0.678);
+  background-color: rgba(79, 129, 128, 0.678);
 }
 li .navtext{
-    height: 10vh;
-    line-height: 10vh;
-    font-size: 20px;
-    font-weight: 400;
-    margin-left: 10%;
+  height: 10vh;
+  line-height: 10vh;
+  font-size: 20px;
+  font-weight: 400;
+  margin-left: 10%;
 }

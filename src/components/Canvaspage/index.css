@@ -1,162 +1,177 @@
 .canvas_box{
-    position: absolute;
-    top: 30px;
-    left: 30px;
-    /* margin-right: 30px;
-    margin-bottom: 30px; */
-    /* margin-left: 30px;
-    margin-top: 30px; */
-    /* width: 570px;
-    height: 390px; */
-    /* background-color: #ef5d6a; */
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  /* margin-right: 30px;
+  margin-bottom: 30px; */
+  /* margin-left: 30px;
+  margin-top: 30px; */
+  /* width: 570px;
+  height: 390px; */
+  /* background-color: #ef5d6a; */
 }
-.background-img{
-    position: absolute;
-    top: 30px;
-    left: 30px;
+.background_img{
+  position: absolute;
+  top: 30px;
+  left: 30px;
    /*  margin-right: 30px;
-    margin-bottom: 30px; */
+  margin-bottom: 30px; */
 }
 img{
-    object-fit: cover;
+  object-fit: cover;
 }
-.draw_pencile_box{
-    position: fixed;
-    width: 5vw;
-    height: 5vh;
-    line-height: 4vh;
-    margin: 3vh 0 0 3vw;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 10px;
-    border: 2px solid #C2CFCF;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    z-index: 10;
-    background-color: #C2CFCF;    
+.draw_pencil_box{
+  position: fixed;
+  width: 5vw;
+  height: 5vh;
+  line-height: 4vh;
+  margin: 3vh 0 0 3vw;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 10px;
+  border: 2px solid #C2CFCF;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  z-index: 10;
+  background-color: #C2CFCF;  
 }
-.pencile_wrap{
-    position: fixed;
-    margin-top: 2vh;
-    /* margin-left: 3vw; */
-    background-color: #fff;
-    border: 1px beige solid;
-    border-radius: 8px;
-    width: 75vw;
-    opacity: 1; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center;
-    /* overflow: hidden; */
+.pencil_wrap{
+  position: fixed;
+  margin-top: 2vh;
+  /* margin-left: 3vw; */
+  background-color: #fff;
+  border: 1px beige solid;
+  border-radius: 8px;
+  width: 75vw;
+  opacity: 1; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  /* overflow: hidden; */
 }
-.pencile_wrap_time{
-    opacity: 0;
-    animation:moveup 1s; 
-    animation-fill-mode:forwards;
-    animation-delay:.5s;
+.pencil_wrap_time{
+  opacity: 0;
+  animation:moveup 1s; 
+  animation-fill-mode:forwards;
+  animation-delay:.5s;
 }
-.pencile_wrap_leave{
-    opacity: 0; 
+.pencil_wrap_leave{
+  opacity: 0; 
 }
 
 @keyframes moveup{ 
-    from{ 
-        transform: translateY(0);
-    } 
-    to{
-        opacity: 1; 
-        transform: translateY(0);
-    } 
+  from{ 
+    transform: translateY(0);
+  } 
+  to{
+    opacity: 1; 
+    transform: translateY(0);
+  } 
 }
-.pencile_ul{
-    list-style: none;
+.pencil_ul{
+  list-style: none;
 }
-.pencile_li{
-    float: left;
-    height: 10vh;
-    width: 8vw;
-    margin: 20px;
-    background-color: pink;
-    border-radius: 8px;
-    text-align: center;
-    line-height: 12vh;
-    padding-top: 3px;
+.pencil_li{
+  float: left;
+  height: 10vh;
+  width: 8vw;
+  margin: 20px;
+  background-color: pink;
+  border-radius: 8px;
+  text-align: center;
+  line-height: 12vh;
+  padding-top: 3px;
 }
-.pencile_li:hover{
-    background-color: rgba(255,192,203,0.5) !important;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+.pencil_li:hover{
+  background-color: rgba(255,192,203,0.5) !important;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
-.textbox{
-    color: #666;
-    background-color: #fff;
-    border-radius: 5px;
-    width: 12vw;
-    height: 4vh;
-    position: fixed;
-    left: 38vw;
-    top: 15vh;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    border: #a492f2 1.5px solid;
+.text_box{
+  color: #666;
+  background-color: #fff;
+  border-radius: 5px;
+  width: 12vw;
+  height: 4vh;
+  position: fixed;
+  left: 38vw;
+  top: 15vh;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  border: #a492f2 1.5px solid;
 }
 select{
-    width: 4vw;
-    outline: none;
-    border-radius: 3px;
-    border: #a492f2 2px solid;
-    margin-left: 0.5vw;
+  width: 4vw;
+  outline: none;
+  border-radius: 3px;
+  border: #a492f2 2px solid;
+  margin-left: 0.5vw;
 }
-.inputbox{
-    display: none;
-    background-color: rgba(255, 192, 203, 0.8);
-    border-radius: 5px;
-    width: 18vw;
-    height: 8vh;
-    position: fixed;
-    left: 46vw;
-    top: 15vh;
+.input_box{
+  /* display: none; */
+  background-color: rgba(255, 192, 203, 0.8);
+  border-radius: 5px;
+  width: 18vw;
+  height: 8vh;
+  position: fixed;
+  left: 46vw;
+  top: 15vh;
 }
-.inputbox span{
-    width: 100%;
-    text-align: center;
-    height: 1vh;
-    display: inline-block;
-    color: #3008e4 !important;
-    /* margin: auto; */
+.input_box span{
+  width: 100%;
+  text-align: center;
+  height: 1vh;
+  display: inline-block;
+  color: #3008e4 !important;
+  /* margin: auto; */
 }
 input[type="range"] {
-    -webkit-appearance: none;
-    background-color: #fff;
-    width: 150px;
-    height: 5px;
-    border-radius: 5px;
-    margin: 0 auto;
-    outline: 0;    position: absolute;
-    top: 5vh;
-    left: 2vh;
+  -webkit-appearance: none;
+  background-color: #fff;
+  width: 150px;
+  height: 5px;
+  border-radius: 5px;
+  margin: 0 auto;
+  outline: 0;  position: absolute;
+  top: 5vh;
+  left: 2vh;
   }
   input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    background-color: #a492f2;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid white;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
+  -webkit-appearance: none;
+  background-color: #a492f2;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid white;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
   }
    input[type="range"]::-webkit-slider-thumb:hover {
-    background-color: white;
-    border: 2px solid #a492f2;
+  background-color: white;
+  border: 2px solid #a492f2;
   }
   input[type="range"]::-webkit-slider-thumb:active {
-    transform: scale(1.3);
+  transform: scale(1.3);
   
   }
-  .colorbox{
-    position: absolute;
-    border-radius: 5px;
-    width: 18vw;
-    height: 8vh;
-    position: fixed;
-    left: 56vw;
-    top: 15vh;
+  .color_box{
+  position: absolute;
+  border-radius: 5px;
+  width: 18vw;
+  height: 8vh;
+  position: fixed;
+  left: 56vw;
+  top: 15vh;
+}
+.save_canvas{
+  position: fixed;
+  width: 5vw;
+  height: 3vh;
+  text-align: center;
+  line-height: 3vh;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  right: 2vw;
+  bottom: 1vh;
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+  background-color: #ef5d6a;
+  color: #fff;
 }
