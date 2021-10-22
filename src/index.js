@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import {BrowserRouter, Route,Switch,Redirect} from 'react-router-dom'
-// import App from './App';
 
 import CanvasPage from './components/CanvasPage';
 import Home from './components/Home'

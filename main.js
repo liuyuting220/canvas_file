@@ -54,6 +54,7 @@ app.on('ready',()=>{
       width:1000,
       height:800,
       frame:false,
+      // transparent: true,
       webPreferences:{
         webSecurity:false,
         nodeIntegration:true,

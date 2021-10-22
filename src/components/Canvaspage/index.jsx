@@ -136,6 +136,7 @@ export default function CanvasPage() {
     // 接收参数 接收文件夹中的图片；列表
     electron.ipcRenderer.on('canvas-img',(event,arg) => {
       // imgRef = arg;
+      console.log(arg);
       loadImg(arg);
     })
   }, [])

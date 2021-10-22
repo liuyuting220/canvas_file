@@ -1,3 +1,11 @@
+.photoUndefined{
+  display: block;
+  margin-top: 25vh;
+  margin-left: 30vw;
+}
+.photoFined{
+  display: none;
+}
 .fileBox{
   text-align: center;
   vertical-align: middle;

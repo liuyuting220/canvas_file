@@ -103,6 +103,7 @@ wss.on('connection',function connection(ws) {
               });
             }
             else{
+              let str1 = targetPath.replace(/\\/g,'\\\\\\\\');
               my.query(`UPDATE updataImg SET canvasImg='${targetPath}' WHERE upname='${imgData[1]}';`)
             }
           })
@@ -136,7 +137,7 @@ function linkSQL(req,res){
           }else{
             for (let i in name) {
               let str = name[i];
-              let str1 = address[i];
+              let str1 = address[i].replace(/\\/g,'\\\\\\\\');
               my.query(`INSERT INTO updataImg(upaddress,upname) VALUES('${str1}','${str}');`,
                 (err, data) => {
                   if (err) {
